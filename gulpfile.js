@@ -73,7 +73,8 @@ function buildHTML() {
     .src(paths.pages.src)
     .pipe(pug())
     .pipe(size({ title: "pages", showFiles: true }))
-    .pipe(gulp.dest(paths.pages.dest));
+    .pipe(gulp.dest(paths.pages.dest))
+    .pipe(mode.dev(browserSync.stream()));
 }
 
 /**
@@ -94,7 +95,8 @@ function transpileJS() {
     .pipe(concat("application.js"))
     .pipe(mode.dev(sourcemaps.write()))
     .pipe(size({ title: "scripts", showFiles: true }))
-    .pipe(gulp.dest(paths.javascripts.dest));
+    .pipe(gulp.dest(paths.javascripts.dest))
+    .pipe(mode.dev(browserSync.stream()));
 }
 
 /**
@@ -143,7 +145,7 @@ function watch() {
   });
   gulp.watch(paths.styles.src, style);
   gulp.watch(paths.pages.src, buildHTML);
-  gulp.watch("dist/*.html", reload);
+  gulp.watch("dist/*", reload);
 }
 
 /**
